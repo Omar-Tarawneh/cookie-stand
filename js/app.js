@@ -8,7 +8,7 @@ function getRandomNum(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
-// Generate random number of customer according to min and max
+// Generate number of cookies from the avg cookies sales and random number of customers for each hour
 function CookiesEachHour(min, max, avg) {
     var customerNumArray = [];
     for (let index = 0; index < hour.length; index++) {
