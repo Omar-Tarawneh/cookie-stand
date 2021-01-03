@@ -9,7 +9,7 @@ function getRandomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 // Generate random number of customer according to min and max
-function customer(min, max, avg) {
+function CookiesEachHour(min, max, avg) {
     var customerNumArray = [];
     for (let index = 0; index < hour.length; index++) {
         customerNumArray.push(Math.floor(getRandomNum(min, max) * avg));
@@ -26,7 +26,7 @@ function cityShopObjects(minCus, maxCus, avgCookies, cityName) {
         min: minCus,
         max: maxCus,
         avgSale: avgCookies,
-        sales: customer(minCus, maxCus, avgCookies)
+        sales: CookiesEachHour(minCus, maxCus, avgCookies)
     };
     return shop;
 }
