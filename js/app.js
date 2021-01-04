@@ -67,7 +67,7 @@ Shop.prototype.render = function () {
     // adding total number of cookies of each hour
 }
 
-
+// render for all cities
 for (let index = 0; index < cities.length; index++) {
     cities[index].render();
 
@@ -116,12 +116,14 @@ function totalCookiesPerHour(tableArray) {
         totalCookies.push(sum);
         // console.log('========');
     }
+    sum = 0;
     // console.log(totalCookies);
     for (let index = 0; index < totalCookies.length; index++) {
         sum += totalCookies[index]
     }
-    totalCookies.push(sum - totalCookies[13]);
+    totalCookies.push(sum);
     // console.log(sum);
+    // console.log(totalCookies);
     return totalCookies;
 }
 // console.log(totalCookiesPerHour(twoDimensionalArray));
