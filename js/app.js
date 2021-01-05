@@ -57,6 +57,14 @@ function listItemGenerator(shop) {
         list.appendChild(listItem);
     }
 }
+function totalGenerator(shop) {
+    var total = 0;
+    for (let index = 0; index < shop.sales.length; index++) {
+        total += shop.sales[index];
+    }
+    return total;
+}
+
 
 
 
@@ -66,4 +74,9 @@ for (let index = 0; index < cities.length; index++) {
     h2.textContent = cities[index].name
     list.appendChild(h2)
     listItemGenerator(cities[index]);
+    var sum = 0;
+    sum = totalGenerator(cities[index]);
+    var listItem = document.createElement('li');
+    listItem.textContent = "Total : " + sum;
+    list.appendChild(listItem);
 }
