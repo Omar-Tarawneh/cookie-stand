@@ -1,5 +1,5 @@
 'use strict';
-var hourOfWorking = ['6 AM',
+var hour = ['6 AM',
     '7 AM',
     '8 AM',
     '9 AM',
@@ -78,7 +78,7 @@ function randomNumCustomerPerHour(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     var customerArray = []
-    for (let index = 0; index < hourOfWorking.length; index++) {
+    for (let index = 0; index < hour.length; index++) {
         customerArray.push(Math.floor(Math.random() * (max - min + 1) + min));
     }
     return customerArray;
