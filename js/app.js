@@ -1,19 +1,12 @@
 'use strict';
-var hour = ['6 AM',
-    '7 AM',
-    '8 AM',
-    '9 AM',
-    '10 AM',
-    '11 AM',
-    '12 PM',
-    '1 PM',
-    '2 PM',
-    '3 PM',
-    '4 PM',
-    '5 PM',
-    '6 PM',
-    '7 PM'
+// ===========
+// Global Variables
+// ===========
+var hour = ['6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM', '5 PM', '6 PM', '7 PM', 'Daily Location Total'
 ];
+var twoDimensionalArray = [];
+var cities = [];
+
 
 // Constructor Shop for each city passed
 function Shop(shopName, minCustomer, maxCustomer, avgCustomer) {
@@ -24,66 +17,108 @@ function Shop(shopName, minCustomer, maxCustomer, avgCustomer) {
     this.customerPerHour = randomNumCustomerPerHour(this.min, this.max);
     this.cookiePerHour = numberOfCookiePerHour(this.customerPerHour, this.avg);
     this.total = totalNumberOfCookies(this.cookiePerHour);
+    cities.push(this);
+    twoDimensionalArray.push(this.cookiePerHour);
 }
+// Creating the objects
 var seattle = new Shop('Seattle', 22, 65, 6.3);
 var tokyo = new Shop('Tokyo', 3, 24, 1.2);
 var dubai = new Shop('Dubai', 11, 38, 3.7);
 var paris = new Shop('Paris', 20, 38, 2.3);
 var lima = new Shop('Lima', 2, 16, 4.6);
-var total = new Shop('total', 0, 0, 0);
 
-var twoDimensionalArray = [seattle.cookiePerHour, tokyo.cookiePerHour, dubai.cookiePerHour, paris.
-    cookiePerHour, lima.cookiePerHour];
-total.cookiePerHour = totalCookiesPerHour(twoDimensionalArray);
-// creat the head of the table 
-var head = ['city', '6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4PM', '5 PM', '6 PM', '7 PM', 'Daily Location Total'];
-var parent = document.getElementById('sales-list');
-var table = document.createElement('table');
-parent.appendChild(table);
-var tableRow = document.createElement('tr');
-table.appendChild(tableRow);
-for (let index = 0; index < head.length; index++) {
-    var tablehead = document.createElement('th');
-    tablehead.textContent = head[index];
-    tableRow.appendChild(tablehead);
-}
 
-var cities = [seattle, tokyo, dubai, paris, lima, total];
-Shop.prototype.render = function () {
+// =========================
+// prototype for the objects
+// =========================
+Shop.prototype.renderBody = function () {
+    var table = document.getElementsByTagName('table')[0];
     var tableRow = document.createElement('tr');
     table.appendChild(tableRow);
     var tableData = document.createElement('td');
     tableData.textContent = this.name;
     tableRow.appendChild(tableData);
-    for (let index = 0; index < this.cookiePerHour.length; index++) {
+    for (let j = 0; j < this.cookiePerHour.length; j++) {
         var tableData = document.createElement('td');
-        tableData.textContent = this.cookiePerHour[index];
+        tableData.textContent = this.cookiePerHour[j];
         tableRow.appendChild(tableData);
     }
-    //adding the total
     var tableData = document.createElement('td');
     tableData.textContent = this.total;
     tableRow.appendChild(tableData);
-    // adding total number of cookies of each hour
-}
-
-// render for all cities
-for (let index = 0; index < cities.length; index++) {
-    cities[index].render();
 
 }
+// ==============
+// Event Listener
+// ==============
 
+var dataForm = document.getElementById('data-input');
 
+dataForm.addEventListener('submit', function (event) {
+    var name = event.target.name.value;
+    var min = event.target.min.value;
+    var max = event.target.max.value;
+    var avg = event.target.avg.value;
+    var newCity = new Shop(name, parseInt(min), parseInt(max), parseFloat(avg));
+    event.preventDefault();
+    var table = document.getElementsByTagName('table')[0];
+    table.remove();
+    renderHeader();
+    for (let index = 0; index < cities.length; index++) {
+        cities[index].renderBody();
+    }
+    renderFooter();
+
+});
+
+// =============
+// functions
+// =============
+
+// Generate the header of the table
+function renderHeader() {
+    var parent = document.getElementById('sales-list');
+    var table = document.createElement('table')
+    parent.appendChild(table);
+    var tableRow = document.createElement('tr')
+    table.appendChild(tableRow);
+    var tableHead = document.createElement('th');
+    tableHead.textContent = '    ';
+    tableRow.appendChild(tableHead);
+    for (let index = 0; index < hour.length; index++) {
+        var tableHead = document.createElement('th');
+        tableHead.textContent = hour[index];
+        tableRow.appendChild(tableHead);
+    }
+}
+// Generate the footer for the table
+function renderFooter() {
+    var table = document.getElementsByTagName('table')[0];
+    var tableRow = document.createElement('tr');
+    table.appendChild(tableRow);
+    var tableData = document.createElement('td');
+    tableData.textContent = 'total';
+    tableRow.appendChild(tableData);
+    var totalCookies = totalCookiesPerHour(twoDimensionalArray);
+    for (let index = 0; index < totalCookies.length; index++) {
+        var tableData = document.createElement('td');
+        tableData.textContent = totalCookies[index];
+        tableRow.appendChild(tableData);
+    }
+
+}
+
+// Generate an array of random number of customer per hour
 function randomNumCustomerPerHour(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     var customerArray = []
-    for (let index = 0; index < hour.length; index++) {
+    for (let index = 0; index < hour.length - 1; index++) {
         customerArray.push(Math.floor(Math.random() * (max - min + 1) + min));
     }
     return customerArray;
 }
-
+// Generate an array of number of cookies per hour
 function numberOfCookiePerHour(customerPerHour, avg) {
     var cookieArray = [];
     for (let index = 0; index < customerPerHour.length; index++) {
@@ -91,7 +126,7 @@ function numberOfCookiePerHour(customerPerHour, avg) {
     }
     return cookieArray;
 }
-
+// Generate the number of cookies for each objects
 function totalNumberOfCookies(cookieArray) {
     var total = 0;
     for (let index = 0; index < cookieArray.length; index++) {
@@ -99,9 +134,6 @@ function totalNumberOfCookies(cookieArray) {
     }
     return total;
 }
-
-
-
 
 // Nested loop to go through each columns and assign the sum of the columns to new array 
 function totalCookiesPerHour(tableArray) {
@@ -126,5 +158,12 @@ function totalCookiesPerHour(tableArray) {
     // console.log(totalCookies);
     return totalCookies;
 }
-// console.log(totalCookiesPerHour(twoDimensionalArray));
 
+// =================================
+// calling the function to render the page
+// =================================
+renderHeader();
+for (let index = 0; index < cities.length; index++) {
+    cities[index].renderBody();
+}
+renderFooter();
