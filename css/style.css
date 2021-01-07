@@ -114,3 +114,33 @@ footer {
     text-align: center;
 
 }
+/* fonts */
+
+#boxes p {
+    font-family: "Times New Roman", Times, serif;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+th, td {
+    font-family: 'Lobster', cursive;
+}
+
+
+h1{
+    font-family: 'Yellowtail', cursive;
+}
+
+fieldset{
+    border:2px solid green;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;	
+    border-radius:8px;	
+}
