@@ -59,9 +59,12 @@ header a:hover {
 }
 #showcase {
     min-height: 400px;
-    background-color: teal;
+    background-image: url(https://github.com/LTUC/amman-201d12/blob/main/class-06/lab/assets/salmon.png?raw=true);
     text-align: center;
-    color: white;
+    color: rgb(255, 157, 146);
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-size: 80%;
 }
 #showcase h1 {
     margin-top: 100px;
